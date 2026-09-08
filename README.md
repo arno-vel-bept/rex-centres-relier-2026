@@ -14,10 +14,11 @@ Le deck couvre :
 
 ## Consulter les slides
 
-Le deck est un unique fichier HTML autonome, sans dépendance ni build.
+Le deck est un fichier HTML sans build (CSS/JS inline). Seules les captures
+d'écran de la démo Langfuse sont chargées depuis [`assets/`](assets/).
 
 - **En ligne :** https://arno-vel-bept.github.io/rex-centres-relier-2026/
-- **En local :** ouvrir [`slides.html`](slides.html) dans un navigateur.
+- **En local :** ouvrir [`slides.html`](slides.html) dans un navigateur (garder le dossier `assets/` à côté).
 
 ### Raccourcis clavier
 
@@ -33,7 +34,8 @@ Le deck est un unique fichier HTML autonome, sans dépendance ni build.
 
 Chaque push sur `main` déclenche le workflow
 [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml),
-qui publie `slides.html` sur GitHub Pages (servi comme `index.html`).
+qui publie `slides.html` (servi comme `index.html`) et le dossier `assets/`
+sur GitHub Pages.
 
 > GitHub Pages sur un dépôt privé nécessite un plan GitHub payant
 > (Pro, Team ou Enterprise). Sinon, publier le dépôt ou consulter le fichier
@@ -42,7 +44,8 @@ qui publie `slides.html` sur GitHub Pages (servi comme `index.html`).
 ## Contenu
 
 - `slides.html` — la présentation complète (HTML/CSS/JS inline).
-- Les blocs `À COMPLÉTER` du deck signalent les captures d'écran et exemples à ajouter avant la présentation.
+- `assets/` — captures d'écran Langfuse utilisées dans la slide de démo.
+- Les blocs `À COMPLÉTER` restants signalent les exemples à ajouter avant la présentation.
 
 ## Sources
 
