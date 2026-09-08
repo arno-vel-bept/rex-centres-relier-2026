@@ -211,6 +211,7 @@
     }
     .demo-step p { margin: 0; font-size: clamp(11px, .93vw, 15px); line-height: 1.26; }
     .capture-stack { display: grid; grid-template-rows: 1fr 1fr; gap: 1rem; }
+    .demo-layout .capture-stack { height: 60vh; }
     .capture {
       min-height: 18vh; display: flex; align-items: center; justify-content: center; text-align: center;
       border: 2px dashed rgba(255,212,59,.72); border-radius: 16px;
@@ -218,6 +219,30 @@
         linear-gradient(135deg, rgba(255,212,59,.13), rgba(255,212,59,.045)),
         repeating-linear-gradient(45deg, transparent, transparent 18px, rgba(255,212,59,.025) 18px, rgba(255,212,59,.025) 36px);
       color: #ffe783; padding: 1.2rem; font-weight: 800; font-size: clamp(13px, 1.1vw, 18px);
+    }
+    .demo-left { display: flex; flex-direction: column; }
+    .trace-link {
+      align-self: flex-start; margin-top: .9rem;
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .5rem .85rem; border: 1px solid var(--card-border); border-radius: 999px;
+      color: var(--slide-accent); font-weight: 750; text-decoration: none;
+      font-size: clamp(11px, .9vw, 14px); background: rgba(255, 61, 71, .06);
+      transition: background .18s ease, border-color .18s ease;
+    }
+    .trace-link:hover { background: rgba(255, 61, 71, .14); border-color: var(--bp-red); }
+    .capture.shot {
+      display: block; margin: 0; padding: 0; overflow: hidden; position: relative;
+      border: 2px solid var(--card-border); background: var(--card-bg);
+    }
+    .capture.shot img {
+      display: block; width: 100%; height: 100%;
+      object-fit: cover; object-position: left top;
+    }
+    .capture.shot figcaption {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      padding: .4rem .7rem; text-align: left;
+      font-size: clamp(10px, .8vw, 13px); font-weight: 750; color: var(--white);
+      background: linear-gradient(transparent, rgba(0, 0, 0, .82));
     }
 
     /* Judge */
@@ -827,16 +852,25 @@
       <div class="eyebrow">Démonstration</div>
       <h2>Langfuse : du projet à la conversation complète</h2>
       <div class="demo-layout">
-        <div class="steps-list">
-          <div class="demo-step"><span class="step-num">1</span><p>Ouvrir le projet <strong>mmdev</strong> ou <strong>mmprod</strong>.</p></div>
-          <div class="demo-step"><span class="step-num">2</span><p>Filtrer une période ou un forum utilisateur.</p></div>
-          <div class="demo-step"><span class="step-num">3</span><p>Lire input, output, contexte et métadonnées d’une trace.</p></div>
-          <div class="demo-step"><span class="step-num">4</span><p>Regrouper par session pour suivre tout l’échange.</p></div>
-          <div class="demo-step"><span class="step-num">5</span><p>Exporter ou exploiter les traces en analyse batch.</p></div>
+        <div class="demo-left">
+          <div class="steps-list">
+            <div class="demo-step"><span class="step-num">1</span><p>Ouvrir le projet <strong>mmdev</strong> ou <strong>mmprod</strong>.</p></div>
+            <div class="demo-step"><span class="step-num">2</span><p>Filtrer une période ou un forum utilisateur.</p></div>
+            <div class="demo-step"><span class="step-num">3</span><p>Lire input, output, contexte et métadonnées d’une trace.</p></div>
+            <div class="demo-step"><span class="step-num">4</span><p>Regrouper par session pour suivre tout l’échange.</p></div>
+            <div class="demo-step"><span class="step-num">5</span><p>Exporter ou exploiter les traces en analyse batch.</p></div>
+          </div>
+          <a class="trace-link" href="https://cloud.langfuse.com/project/cmgjexn11001ead07d1chm9s2/traces?page=2&amp;limit=50&amp;peek=ec6de1534dbfc699&amp;observation=ec6de1534dbfc699&amp;traceId=fc3fcd2ff862dba6805760462e8d016b&amp;timestamp=2026-09-08T14%3A57%3A31.503Z" target="_blank" rel="noopener"><span class="dot"></span> Voir une trace d’exemple sur Langfuse ↗</a>
         </div>
         <div class="capture-stack">
-          <div class="capture">À COMPLÉTER — capture d’écran de la liste des traces</div>
-          <div class="capture">À COMPLÉTER — capture d’écran d’une trace / session</div>
+          <figure class="capture shot">
+            <img src="assets/example-langfuse-main-screen.png" alt="Langfuse — liste des traces du projet mmdev">
+            <figcaption>Liste des traces — projet mmdev</figcaption>
+          </figure>
+          <figure class="capture shot">
+            <img src="assets/example-langfuse-trace-tree.png" alt="Langfuse — arbre d’observations d’une trace LangGraph">
+            <figcaption>Arbre d’une trace / session</figcaption>
+          </figure>
         </div>
       </div>
       <div class="source-strip">Sources internes : Outlook &amp; Teams — août 2026</div><span class="slide-no">06</span>
