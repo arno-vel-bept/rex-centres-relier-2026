@@ -11,17 +11,16 @@ page = await lf.async_api.trace.list(
     order_by="timestamp.desc",
 )
 traces = page.data
-total_pages = page.meta.total_pages   # permet de fetch en 
+total_pages = page.meta.total_pages   # permet de fetch en parallèle 
 
 # 2. Les traces ont un `session_id`, les métriques sont faciles à grouper. 
 by_session: dict[str, list] = defaultdict(list)
 for t in traces:
     by_session[t.session_id].append(t)
 
-# 3. Observations are typed (TOOL / GENERATION / …) with structured I/O,
-#    so we reconstruct *what the agent actually did* after the fact —
-#    which strategy it activated, whether RAG returned anything —
-#    without a single extra log line inside the agent.
+# 3. Les observations sont typées (TOOL, GENERATION, etc) avec I/O structurée,
+#    ce qui permet de reconstruire ce que l'agent a fait a posteriori:
+#    quelle stratégie utilisée, savoir si le RAG a retourné des documents, ...
 for obs in observations:                     # from GET /api/public/v2/observations
     if obs["type"] == "TOOL" and obs["name"] == "strategy_management":
         kpi["strategy_selected"] = True
