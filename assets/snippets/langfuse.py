@@ -1,0 +1,29 @@
+from langfuse import Langfuse
+
+lf = Langfuse()  # Clés issues de l'env
+
+# 1. Toutes les étapes de l'agent sont déjà des traces requêtables.
+#    Il n'a pas été nécessaire d'ajouter des events/attributes.
+#    Les KPI viennent de l'observability qui était déjà capturée.
+page = await lf.async_api.trace.list(
+    from_timestamp=start, to_timestamp=end,
+    fields="core,io,metadata",        # seulement fetch le nécessaire
+    order_by="timestamp.desc",
+)
+traces = page.data
+total_pages = page.meta.total_pages   # permet de fetch en 
+
+# 2. Les traces ont un `session_id`, les métriques sont faciles à grouper. 
+by_session: dict[str, list] = defaultdict(list)
+for t in traces:
+    by_session[t.session_id].append(t)
+
+# 3. Observations are typed (TOOL / GENERATION / …) with structured I/O,
+#    so we reconstruct *what the agent actually did* after the fact —
+#    which strategy it activated, whether RAG returned anything —
+#    without a single extra log line inside the agent.
+for obs in observations:                     # from GET /api/public/v2/observations
+    if obs["type"] == "TOOL" and obs["name"] == "strategy_management":
+        kpi["strategy_selected"] = True
+    if RAG_EMPTY_SENTINEL in str(obs["output"]):
+        kpi["rag_empty"] = True
