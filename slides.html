@@ -702,6 +702,40 @@
     .sources-panel h3 { color: var(--red-light); }
     .sources-panel ul { color: var(--warm-grey); }
 
+    /* Image lightbox — click a screenshot to maximize, Esc / click to return */
+    .slide .capture.shot,
+    .slide img.zoomable { cursor: zoom-in; }
+    .lightbox {
+      position: fixed; inset: 0; z-index: 120;
+      display: none; align-items: center; justify-content: center;
+      padding: 4.5vmin;
+      background: rgba(10, 0, 0, .84);
+      backdrop-filter: blur(7px);
+      cursor: zoom-out;
+      animation: lightbox-in .16s ease-out;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 100%; max-height: 100%; object-fit: contain;
+      border-radius: 10px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, .55);
+      background: var(--deep-red);
+    }
+    .lightbox-close {
+      position: absolute; top: 3vmin; right: 3vmin;
+      width: 42px; height: 42px; border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, .32);
+      background: rgba(0, 0, 0, .42); color: var(--white);
+      font-size: 19px; line-height: 1; cursor: pointer;
+      display: grid; place-items: center; transition: .16s ease;
+    }
+    .lightbox-close:hover { background: var(--bp-red); border-color: var(--bp-red); }
+    .lightbox-hint {
+      position: absolute; left: 0; right: 0; bottom: 3vmin; text-align: center;
+      color: rgba(255, 255, 255, .58); font-size: 11px; letter-spacing: .04em;
+    }
+    @keyframes lightbox-in { from { opacity: 0; } to { opacity: 1; } }
+
     body.overview { background: var(--off-white); }
     body.overview .deck {
       grid-template-columns: repeat(3, 1fr);
@@ -743,6 +777,7 @@
         break-after: page;
         page-break-after: always;
       }
+      .lightbox { display: none !important; }
     }
   </style>
 </head>
@@ -1049,6 +1084,12 @@
   </nav>
   <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
 
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image agrandie">
+    <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Fermer l’image agrandie">✕</button>
+    <img id="lightboxImg" alt="">
+    <div class="lightbox-hint">Cliquez ou appuyez sur Échap pour revenir à la présentation</div>
+  </div>
+
   <script>
     (() => {
       const slides = Array.from(document.querySelectorAll('.slide'));
@@ -1058,6 +1099,9 @@
       const next = document.getElementById('next');
       const sourcesToggle = document.getElementById('sourcesToggle');
       const sourcesPanel = document.getElementById('sourcesPanel');
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightboxImg');
+      const lightboxClose = document.getElementById('lightboxClose');
       let index = 0;
       let overview = false;
 
@@ -1086,6 +1130,34 @@
         sourcesToggle.setAttribute('aria-expanded', String(open));
       }
 
+      const isLightboxOpen = () => lightbox.classList.contains('open');
+
+      function openLightbox(img) {
+        if (!img) return;
+        lightboxImg.src = img.currentSrc || img.src;
+        lightboxImg.alt = img.alt || '';
+        lightbox.classList.add('open');
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove('open');
+        lightboxImg.removeAttribute('src');
+      }
+
+      // Any screenshot in a slide can be maximized; overview clicks still navigate.
+      document.querySelectorAll('.slide .capture.shot, .slide img').forEach(el => {
+        const img = el.matches('img') ? el : el.querySelector('img');
+        if (!img) return;
+        el.style.cursor = 'zoom-in';
+        el.addEventListener('click', event => {
+          if (overview) return;
+          event.stopPropagation();
+          openLightbox(img);
+        });
+      });
+      lightbox.addEventListener('click', closeLightbox);
+      lightboxClose.addEventListener('click', closeLightbox);
+
       function requestFullscreen() {
         if (!document.fullscreenElement) {
           document.documentElement.requestFullscreen?.();
@@ -1106,6 +1178,13 @@
         });
       });
       document.addEventListener('keydown', event => {
+        if (isLightboxOpen()) {
+          if (event.key === 'Escape' || event.key === ' ' || event.key === 'Enter') {
+            event.preventDefault();
+            closeLightbox();
+          }
+          return;
+        }
         if (event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' ') {
           event.preventDefault();
           if (!overview) show(index + 1);
