@@ -244,7 +244,8 @@
     }
     .trace-link:hover { background: rgba(255, 61, 71, .14); border-color: var(--bp-red); }
     .repo-link {
-      display: inline-flex; align-items: center; gap: .45rem; vertical-align: middle;
+      display: flex; width: fit-content; max-width: 100%;
+      align-items: center; gap: .45rem;
       margin-top: .75rem; padding: .38rem .72rem;
       border: 1px solid var(--card-border); border-radius: 999px;
       background: rgba(255, 61, 71, .06); color: var(--slide-accent);
@@ -1314,7 +1315,9 @@
           <h3 class="accent">Ressource</h3>
           <p style="margin-bottom:0">Code source du chatbot des Centres Relier :</p>
           <a class="repo-link" href="https://github.com/CentresRelier/stopcyberviolences-chatbot" target="_blank" rel="noopener"><img class="favicon" src="https://www.google.com/s2/favicons?domain=github.com&amp;sz=32" alt="" width="16" height="16" referrerpolicy="no-referrer" onerror="this.remove()">github.com/CentresRelier/stopcyberviolences-chatbot ↗</a>
-          <p class="small muted" style="margin:1rem 0 0">Application : <a class="repo-link" href="https://adult.monstermessenger.org" target="_blank" rel="noopener"><img class="favicon" src="https://www.google.com/s2/favicons?domain=adult.monstermessenger.org&amp;sz=32" alt="" width="16" height="16" referrerpolicy="no-referrer" onerror="this.remove()">adult.monstermessenger.org ↗</a> Le lien est bloqué par Netskope dans l’environnement BearingPoint.</p>
+          <p class="small muted" style="margin:1rem 0 0">Application :</p>
+          <a class="repo-link" href="https://adult.monstermessenger.org" target="_blank" rel="noopener"><img class="favicon" src="https://www.google.com/s2/favicons?domain=monstermessenger.org&amp;sz=32" alt="" width="16" height="16" referrerpolicy="no-referrer" onerror="this.remove()">adult.monstermessenger.org ↗</a>
+          <p class="small muted" style="margin:.65rem 0 0">Lien bloqué par Netskope dans l’environnement BearingPoint.</p>
         </article>
       </div>
       <div class="closing-quote">Le principal livrable n’est pas seulement du code : c’est une boucle d’amélioration continue plus observable et plus maîtrisable.</div>
