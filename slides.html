@@ -158,9 +158,9 @@
       position: absolute; inset: 3%; border: 1px solid rgba(255,255,255,.18); border-radius: 50%;
     }
     .cover .brandmark .ring.r2 { inset: 27%; border-color: rgba(51,0,0,.45); }
-    .cover .brandmark .line {
-      position: absolute; left: 2%; right: 2%; top: 50%; height: 1px;
-      background: rgba(255,255,255,.2); transform: rotate(-28deg);
+    .cover .brandmark .logo {
+      position: absolute; top: 50%; left: 50%; width: 34%;
+      transform: translate(-50%, -50%);
     }
     .cover .content { width: 69%; position: relative; z-index: 1; }
     .cover .subtitle { max-width: 760px; color: var(--warm-grey); font-size: clamp(20px, 2.1vw, 31px); line-height: 1.25; }
@@ -594,12 +594,10 @@
       box-shadow: 0 24px 70px rgba(0, 0, 0, .28);
       transform: rotate(-8deg);
     }
-    .cover .brandmark .line {
-      left: -4%;
-      right: -4%;
-      height: 3px;
-      background: var(--white);
-      transform: rotate(-34deg);
+    .cover .brandmark .logo {
+      width: 42%;
+      transform: translate(-50%, -50%) rotate(-8deg);
+      filter: drop-shadow(0 6px 16px rgba(0, 0, 0, .28));
     }
 
     .work-card { min-height: 17.4vh; }
@@ -791,7 +789,8 @@
         <p class="meta">Été 2026 &nbsp;•&nbsp; BearingPoint × Centres Relier</p>
       </div>
       <div class="brandmark" aria-hidden="true">
-        <div class="ring"></div><div class="ring r2"></div><div class="orb"></div><div class="line"></div>
+        <div class="ring"></div><div class="ring r2"></div><div class="orb"></div>
+        <img class="logo" src="assets/monster-messenger-logo.svg" alt="Monster Messenger">
       </div>
       <p class="tagline">Objectif : consolider et améliorer un chatbot sur lequel l’équipe avait déjà travaillé l’an dernier, afin de préparer son déploiement auprès de vrais utilisateurs dès septembre 2026.</p>
       <span class="slide-no">01</span>
