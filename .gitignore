@@ -12,3 +12,6 @@ Icon?
 
 # Build output
 _site/
+
+# Prototype
+prototype/
